@@ -1,0 +1,13 @@
+{
+  "name": "aliyun",
+  "description": "阿里云资源查询助手 - 使用自然语言查询ECS、RDS、VPC、SLB、OSS等资源，仅支持只读查询操作",
+  "version": "1.0.0",
+  "author": {
+    "name": "xiaoyang",
+    "email": "superspjj@163.com"
+  },
+  "homepage": "https://github.com/go-restream/aliyun-ask",
+  "repository": "https://github.com/go-restream/aliyun-ask",
+  "license": "Apache-2.0",
+  "keywords": ["aliyun", "alibaba-cloud", "cloud", "devops", "查询"]
+}
