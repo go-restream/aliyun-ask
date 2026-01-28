@@ -294,8 +294,6 @@ aliyun {service} {api} --param1 value1 --param2 value2
 # 示例
 aliyun ecs DescribeInstances --RegionId cn-hangzhou --Status Running
 
-# JSON 输出格式（推荐自动化处理）
-aliyun ecs DescribeInstances --RegionId cn-hangzhou --Output json
 
 # 指定输出文件
 aliyun ecs DescribeInstances --RegionId cn-hangzhou > output.json
@@ -307,7 +305,6 @@ aliyun ecs DescribeInstances --RegionId cn-hangzhou > output.json
 |--------|------|--------|
 | `RegionId` | 地域ID | cn-hangzhou, cn-beijing, cn-shanghai |
 | `InstanceId` | 实例ID | i-bp1xxxxxx |
-| `PageSize/PageNumber` | 分页参数 | 10-100 (默认50) |
 | `Status` | 资源状态 | Running, Stopped, Starting |
 
 ### 4️⃣ 错误处理与最佳实践
@@ -319,14 +316,14 @@ aliyun ecs DescribeInstances --RegionId cn-hangzhou > output.json
 
 **最佳实践**:
 1. ✅ 使用 `--RegionId` 显式指定地域
-2. ✅ 大量数据查询时使用分页参数
-3. ✅ 敏感操作前先执行 `Describe` 查询确认
-4. ✅ 定期检查 API 版本更新公告
+2. ✅ 敏感操作前先执行 `Describe` 查询确认
+3. ✅ 定期检查 API 版本更新公告
 
 ### 5️⃣ 版本更新记录
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.2 | 2025-01-28 | 删除 --Output json 和 分页参数 |
 | v2.1 | 2025-01-16 | 全面完善所有服务的"主要参数"列；添加参数值示例和可选值说明 |
 | v2.0 | 2025-01-16 | 新增 CDN 服务；优化表格格式；补充 CLI 示例；添加快速索引 |
 | v1.0 | 2024-xx-xx | 初始版本，涵盖 20+ 核心服务 |
