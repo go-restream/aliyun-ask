@@ -56,6 +56,17 @@ When querying ACL associations for ALB listeners, **you MUST use the `ListAclRel
 
 **Comparison**: SLB stores ACL association info in listener properties, which can be queried directly via `DescribeLoadBalancer*ListenerAttribute` - unlike ALB.
 
+**⚠️ SLB & ACL Association Query Special Notes**:
+When querying ACL associations for SLB listeners, use the `DescribeLoadBalancerListeners` API:
+- The listener object's `AclIds` property (array) contains the list of associated ACL instance IDs
+- Also includes `AclStatus` (on/off) and `AclType` (white/black) properties
+- Correct query sequence:
+  1. Get listeners: `aliyun slb DescribeLoadBalancerListeners --LoadBalancerId lb-xxx --RegionId <region>`
+  2. Extract AclIds: `| jq '.Listeners.Listener[] | select(.ListenerPort == 80) | .AclIds'`
+  3. Query ACL details: `aliyun slb DescribeAccessControlListAttribute --AclId acl-xxx --RegionId <region>`
+
+**Comparison**: ALB requires `ListAclRelations` API to get ACL associations, while SLB stores them directly in listener properties (`AclIds` array).
+
 ### Step 5: Result Confirmation and Saving
 
 Ask the user if the results meet their requirements.

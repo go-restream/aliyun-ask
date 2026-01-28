@@ -115,8 +115,10 @@
 |查询访问控制策略组列表|DescribeAccessControlLists|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`<br>PageSize: `50`|aliyun slb DescribeAccessControlLists --RegionId cn-hangzhou|
 |查询访问控制策略组配置|DescribeAccessControlListAttribute|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeAccessControlListAttribute --AclId acl-xxx|
 |查询SLB监听器与ACL关联关系|DescribeLoadBalancerTCPListenerAttribute / DescribeLoadBalancerHTTPListenerAttribute / DescribeLoadBalancerHTTPSListenerAttribute|LoadBalancerId: `lb-xxxx`<br>ListenerPort: `80`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeLoadBalancerHTTPListenerAttribute --LoadBalancerId lb-xxx --ListenerPort 80|
+|查询SLB监听器的ACL关联列表|DescribeLoadBalancerListeners|LoadBalancerId: `lb-xxxx`<br>ListenerPort: `80`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeLoadBalancerListeners --LoadBalancerId lb-xxx --RegionId cn-hangzhou \| jq '.Listeners.Listener[] | select(.ListenerPort == 80) | .AclIds'|
+|查询ACL详情（条目、名称等）|DescribeAccessControlListAttribute|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeAccessControlListAttribute --AclId acl-xxx --RegionId cn-hangzhou|
 
-**说明**: SLB 的 ACL 关联信息存储在监听器属性中（AclId 字段），与 ALB 不同，可以直接通过监听器属性查询获取。
+**说明**: SLB 的 ACL 关联信息存储在监听器对象的 `AclIds` 数组字段中（注意是复数形式），通过 `DescribeLoadBalancerListeners` API 获取监听器配置后，解析每个监听器的 `AclIds` 属性即可获取关联的 ACL ID 列表。然后使用 `DescribeAccessControlListAttribute` 查询 ACL 详情。与 ALB 不同（ALB 需调用 `ListAclRelations`），SLB 可直接通过监听器属性获取 ACL 关联。
 
 ---
 

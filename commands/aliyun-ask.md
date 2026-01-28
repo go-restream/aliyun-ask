@@ -53,6 +53,19 @@ description: to query Alibaba Cloud resources using natural language,ask Query a
 
 **对比说明**：SLB 的 ACL 关联信息存储在监听器属性中，可以直接通过 `DescribeLoadBalancer*ListenerAttribute` 查询获取，与 ALB 不同。
 
+**⚠️ SLB 与 ACL 关联查询特别注意事项**：
+当查询 SLB 监听器的 ACL 关联关系时，应使用 `DescribeLoadBalancerListeners` API：
+- 监听器对象中的 `AclIds` 属性（数组）包含关联的 ACL 实例 ID 列表
+- 同时包含 `AclStatus`（on/off）和 `AclType`（white/black）属性
+- 正确的查询命令格式：
+  1. 获取监听器列表：`aliyun slb DescribeLoadBalancerListeners --LoadBalancerId lb-xxx --RegionId <region>`
+  2. 提取 AclIds：`| jq '.Listeners.Listener[] | select(.ListenerPort == 80) | .AclIds'`
+  3. 查询 ACL 详情：`aliyun slb DescribeAccessControlListAttribute --AclId acl-xxx --RegionId <region>`
+
+**与 ALB 的对比**：
+- SLB：ACL 关联信息直接在监听器对象的 `AclIds` 数组字段中
+- ALB：必须调用 `ListAclRelations` API 才能获取真实的关联关系
+
 ### Step 5: 结果确认与保存
 
 询问用户是否已按需求实现结果。
@@ -76,7 +89,7 @@ description: to query Alibaba Cloud resources using natural language,ask Query a
 
 当用户确认已完成任务并结束整个流程时：
 1. 自动总结当前会话中的所有查询结果
-2. 在 `aliyun_memos` 目录下生成 `aliyun_output_<日期_时分>.md` 文件
+2. 在 `aliyun_memos` 目录下生成 `<日期>/aliyun_output_<时分>.md` 目录与文件
 3. 文件内容包含：
    - 会话时间戳
    - 原始查询需求
@@ -85,6 +98,12 @@ description: to query Alibaba Cloud resources using natural language,ask Query a
    - 关键发现与结论（如有）
 
 **注意**：此自动保存操作仅在用户明确确认任务完成时执行，避免在中间执行过程中产生冗余文件。
+
+
+## 执行过程临时文件保存
+    - 执行过程中查询临时文件或生成的临时执行脚本文件将保存在 `aliyun_memos/tmp/` 目录下
+    - 临时文件保存，勿自动清理和删除
+
 
 ## 错误处理
 
