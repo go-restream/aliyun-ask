@@ -48,6 +48,14 @@ Execution guidelines:
 - When uncertain about command parameters, use `aliyun help` or `aliyun <product> help` to get help
 - Collect results from each execution step
 
+**⚠️ ALB & ACL Association Query Special Notes**:
+When querying ACL associations for ALB listeners, **you MUST use the `ListAclRelations` API** - do NOT rely on listener object properties:
+- The `AclId` field returned by listener objects may be empty or unreliable
+- Correct command format: `aliyun alb ListAclRelations --AclIds.1 'acl-xxxx' --RegionId <region> --force`
+- Batch query supported: `aliyun alb ListAclRelations --AclIds.1 'acl-1' --AclIds.2 'acl-2' --RegionId <region> --force`
+
+**Comparison**: SLB stores ACL association info in listener properties, which can be queried directly via `DescribeLoadBalancer*ListenerAttribute` - unlike ALB.
+
 ### Step 5: Result Confirmation and Saving
 
 Ask the user if the results meet their requirements.

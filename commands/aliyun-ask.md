@@ -45,6 +45,14 @@ description: to query Alibaba Cloud resources using natural language,ask Query a
 - 遇到参数不确定的情况，使用 `aliyun help` 或 `aliyun <product> help` 获取帮助
 - 收集每一步的执行结果
 
+**⚠️ ALB 与 ACL 关联查询特别注意事项**：
+当查询 ALB 监听器的 ACL 关联关系时，**必须使用 `ListAclRelations` API**，不能依赖监听器对象属性：
+- 监听器对象返回的 `AclId` 字段可能为空或不可靠
+- 正确的查询命令格式：`aliyun alb ListAclRelations --AclIds.1 'acl-xxxx' --RegionId <region> --force`
+- 支持批量查询：`aliyun alb ListAclRelations --AclIds.1 'acl-1' --AclIds.2 'acl-2' --RegionId <region> --force`
+
+**对比说明**：SLB 的 ACL 关联信息存储在监听器属性中，可以直接通过 `DescribeLoadBalancer*ListenerAttribute` 查询获取，与 ALB 不同。
+
 ### Step 5: 结果确认与保存
 
 询问用户是否已按需求实现结果。

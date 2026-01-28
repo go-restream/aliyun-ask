@@ -114,6 +114,9 @@
 |查询虚拟服务器组详情|DescribeVServerGroupAttribute|VServerGroupId: `vsp-xxxx`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeVServerGroupAttribute --VServerGroupId vsp-xxx|
 |查询访问控制策略组列表|DescribeAccessControlLists|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`<br>PageSize: `50`|aliyun slb DescribeAccessControlLists --RegionId cn-hangzhou|
 |查询访问控制策略组配置|DescribeAccessControlListAttribute|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeAccessControlListAttribute --AclId acl-xxx|
+|查询SLB监听器与ACL关联关系|DescribeLoadBalancerTCPListenerAttribute / DescribeLoadBalancerHTTPListenerAttribute / DescribeLoadBalancerHTTPSListenerAttribute|LoadBalancerId: `lb-xxxx`<br>ListenerPort: `80`<br>RegionId: `cn-hangzhou`|aliyun slb DescribeLoadBalancerHTTPListenerAttribute --LoadBalancerId lb-xxx --ListenerPort 80|
+
+**说明**: SLB 的 ACL 关联信息存储在监听器属性中（AclId 字段），与 ALB 不同，可以直接通过监听器属性查询获取。
 
 ---
 
@@ -133,7 +136,7 @@
 |查询转发规则|ListRules|ListenerId: `lsn-xxxx`<br>RegionId: `cn-hangzhou`<br>RuleIds: `["rule-xxxx"]`|aliyun alb ListRules --ListenerId lsn-xxx|
 |查询访问控制列表|ListAcls|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun alb ListAcls --RegionId cn-hangzhou|
 |查询访问控制条目|ListAclEntries|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun alb ListAclEntries --AclId acl-xxx|
-|查询访问控制关联关系|ListAclRelations|AclId: `acl-xxxx`<br>RegionId: `cn-hangzhou`|aliyun alb ListAclRelations --AclId acl-xxx|
+|查询访问控制关联关系|ListAclRelations|AclIds: `["acl-xxxx"]` 或 `["acl-1", "acl-2"]`<br>RegionId: `cn-hangzhou`|aliyun alb ListAclRelations --AclIds.1 'acl-xxxx' --RegionId cn-hangzhou --force<br>aliyun alb ListAclRelations --AclIds.1 'acl-1' --AclIds.2 'acl-2' --RegionId cn-hangzhou --force|
 
 ### 8. VPC (专有网络)
 
