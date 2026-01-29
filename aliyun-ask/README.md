@@ -6,10 +6,10 @@
 
 ```bash
 # 将技能包复制到 Claude Code 的技能目录
-cp aliyun-ask.skill ~/.claude/skills/
+cp aliyun-ask ~/.claude/skills/
 
 # 或使用符号链接
-ln -s /path/to/aliyun-ask.skill ~/.claude/skills/
+ln -s /path/to/aliyun-ask ~/.claude/skills/
 ```
 
 ### 基本使用
