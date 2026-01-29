@@ -1,10 +1,10 @@
-# Aliyun Ask Plugin
+# Aliyun Ask Skill
 
-阿里云（Alibaba Cloud）资源查询助手 - Claude Code 插件
+阿里云（Alibaba Cloud）资源查询助手 - Claude Code Skill
 
 ## 概述
 
-这是一个专为 Claude Code 设计的阿里云资源查询插件，通过自然语言查询阿里云资源信息，包括 ECS、RDS、VPC、SLB、OSS 等多种服务。
+这是一个专为 Claude Code 设计的阿里云资源查询技能Skill，通过自然语言查询阿里云资源信息，包括 ECS、RDS、VPC、SLB、OSS 等多种服务。
 
 ## 核心特性
 
